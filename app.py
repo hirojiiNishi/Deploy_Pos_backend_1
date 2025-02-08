@@ -34,7 +34,7 @@ async def root():
 
 # MySQL接続情報
 DB_CONFIG = {
-    "host": os.getenv("MYSQL_HOST", "tech0-gen-8-step4-db-2.mysql.database.azure.com"),
+    "host": os.getenv("MYSQL_HOST", "https://tech0-gen-8-step4-db-2.mysql.database.azure.com"),
     "user": os.getenv("MYSQL_USER", "Tech0Gen8TA2"),
     "password": os.getenv("MYSQL_PASSWORD", "gen8-1-ta@2"),
     "database": "class2_db"
