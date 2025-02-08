@@ -23,7 +23,7 @@ jobs:
 
       - name: Check if package.json exists
         run: |
-          if [ ! -f package.json ]; then
+          if [ ! -f frontend/package.json ]; then
             echo "Error: package.json not found"
             exit 1
           else
@@ -40,13 +40,13 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
-        working-directory: .
+        working-directory: frontend
 
       - name: Remove node_modules to reduce artifact size
-        run: rm -rf node_modules
+        run: rm -rf frontend/node_modules
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip . -x "node_modules/*" ".git/*" ".github/*"
+        run: zip -r release.zip . -x "frontend/node_modules/*" ".git/*" ".github/*"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -76,7 +76,7 @@ jobs:
         with:
           app-name: 'tech0-gen8-step4-pos-app-36'
           slot-name: 'Production'
-          package: .
+          package: frontend
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4549173A91E24C328C727EE9B2AD1098 }}
 
       - name: Clean up artifact
