@@ -10,32 +10,30 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: read # This is required for actions/checkout
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # 全履歴を取得
 
       - name: Debug project structure
         run: ls -R
 
-      - name: Check if package.json exists
+      - name: Check if frontend/package.json exists
         run: |
-          if [ ! -f tech0-gen8-step4-pos-app-35.azurewebsites.net/frontend/package.json ]; then
-            echo "Error: package.json not found"
+          if [ ! -f frontend/package.json ]; then
+            echo "Error: package.json not found in frontend directory"
             exit 1
-          else
-            echo "package.json found!"
           fi
 
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
 
-      - name: Install dependencies, build, and test
+      - name: Install dependencies, build, and test (Frontend)
         run: |
           npm install
           npm run build --if-present
@@ -43,10 +41,10 @@ jobs:
         working-directory: frontend
 
       - name: Remove node_modules to reduce artifact size
-        run: rm -rf tech0-gen8-step4-pos-app-35.azurewebsites.net/frontend/node_modules
+        run: rm -rf frontend/node_modules
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip . -x "tech0-gen8-step4-pos-app-35.azurewebsites.net/frontend/node_modules/*" ".git/*" ".github/*"
+        run: zip -r release.zip frontend -x "frontend/node_modules/*" ".git/*" ".github/*"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -60,7 +58,7 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
