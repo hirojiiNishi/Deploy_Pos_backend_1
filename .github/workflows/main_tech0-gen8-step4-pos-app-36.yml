@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0  # 全履歴を取得
 
-      - name: List project files
+      - name: Debug project structure
         run: ls -R
 
       - name: Check if package.json exists
@@ -26,6 +26,8 @@ jobs:
           if [ ! -f package.json ]; then
             echo "Error: package.json not found"
             exit 1
+          else
+            echo "package.json found!"
           fi
 
       - name: Set up Node.js version
