@@ -8,6 +8,10 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 import pymysql
 from fastapi.middleware.cors import CORSMiddleware
+import win32api
+import win32com.client
+
+print("pywin32 is working!")
 
 app = FastAPI()
 
