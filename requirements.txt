@@ -5,7 +5,7 @@ mysql-connector-python
 
 
 # データベース操作
-sqlalchemy==1.4.49  # 2.x は databases と競合
+sqlalchemy>=2.0.16  # 2.x は databases と競合
 alembic==1.12.1  # マイグレーション
 psycopg2-binary==2.9.10  # PostgreSQL ドライバ
 databases==0.8.0  # 非同期DB接続
@@ -13,7 +13,7 @@ databases==0.8.0  # 非同期DB接続
 # API テスト & ユニットテスト
 pytest==7.4.0
 pytest-asyncio==0.21.1  # FastAPI の非同期テストに必要
-httpx==0.24.1  # 非同期リクエストクライアント
+httpx>=0.25.0  # 非同期リクエストクライアント
 
 # 環境変数の管理
 python-dotenv==1.0.0
@@ -25,3 +25,4 @@ pyjwt==2.8.0  # JWT 認証
 # CORS 設定（必要なら）
 fastapi[all]
 PyMySQL==1.1.1
+
